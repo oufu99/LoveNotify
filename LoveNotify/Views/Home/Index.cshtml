@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Love You</title>
+    <style>
+        .p_title {
+            margin-top: 50px;
+        }
+
+        .btn_right {
+            margin-left: 100px;
+        }
+        .img
+        {
+            width:300px;height:400px;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div>
+        <p>"小姐姐,我观察你很久了"</p>
+        <p class="p_title">做我女朋友好不好</p>
+        <img class="img" src="~/img/marriage.jpg" />
+        <br />
+        <input class="btn_left" type="button" value="好" />
+        <input class="btn_right" type="button" value="不好" />
+    </div>
+    <script>
+        $(function () {
+            alert("恭喜你!");
+            $(".btn_left").click(btn1);
+            $(".btn_right").click(btn2);
+        });
+
+        function btn1() {
+            alert("恭喜你!");
+        }
+
+        function btn2() {
+            alert("工资上缴!");
+        }
+
+    </script>
+</body>
+</html>
