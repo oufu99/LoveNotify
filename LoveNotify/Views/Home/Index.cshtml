@@ -4,50 +4,165 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Love You</title>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>LOVE @ViewBag.TargetName</title>
+    <link rel=stylesheet href=https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css>
+    <script src="/js/weui.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=PHbkXyvnkL86CXVDRueLv0GN"></script>
     <style>
-        .p_title {
-            margin-top: 50px;
+
+        body,
+        html {
+            height: 100%;
         }
 
-        .btn_right {
-            margin-left: 100px;
-        }
-        .img
-        {
-            width:300px;height:400px;
+        body {
+            font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif
         }
     </style>
-    <script src="~/js/jquery-1.10.2.js"></script>
 </head>
-<body>
-    <div>
-        <p>"小姐姐,我观察你很久了"</p>
-        <p class="p_title">做我女朋友好不好</p>
-        <img class="img" src="~/img/marriage.jpg" />
-        <br />
-        <input class="btn_left" type="button" value="好" />
-        <input class="btn_right" type="button" value="不好" />
+<body ontouchstart>
+    <div id="allmap" style="display: block"></div>
+    <div id="page1">
+        <p style="font-size: 14px;color: #565656;text-align: center;margin: 30px 0;">@ViewBag.TargetName，我留意你很久了~</p>
+        <h3 style="text-align: center;">做我女朋友好不好?</h3>
+        <div style="text-align: center;margin-top: 20px;">
+            <img src="/img/liaoni.png">
+        </div>
+        <div class="weui-btn-area">
+            <a id="yesBtn" onclick="yesFun()" href="javascript:" class="weui-btn weui-btn_primary">好</a>
+        </div>
+        <div class="weui-btn-area" style="margin-bottom: 15px;">
+            <a id="noBtn" onclick="noFun()" href="javascript:" style="background-color:#d84747; " class="weui-btn weui-btn_primary">不好</a>
+        </div>
     </div>
-    <script>
-        $(function () {
-            alert("恭喜你!");
-            $(".btn_left").click(btn1);
-            $(".btn_right").click(btn2);
-        });
-
-        function btn1() {
-            alert("恭喜你!");
-        }
-
-        function btn2() {
-            alert("工资上缴!");
-        }
-
-    </script>
+    <div id="page2" style="display: none;">
+        <div style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+            <img src="/img/tw.gif" style="width: 100px;">
+            <img src="/img/tw.gif" style="width: 100px;position: relative;top: 20px;">
+            <img src="/img/tw.gif" style="width: 100px;">
+        </div>
+        <p style="text-align: center;width: 80%;margin: auto;">有一天，我们一起起床，一起刷牙，一起拉着手出家门。一起遛狗，一起散步，一起为了争电视斗智斗勇。一起买菜，一起做饭，一起为了几毛钱在菜市场咆哮。我知道，一定会有这么一天的。</p>
+        <audio id="bgMusic" src="/mp3/最美情侣-白小白.mp3" loop="true" hidden="true" controls="controls"></audio>
+    </div>
+    
+    <div id="page3" style="display: none;">
+        <h3 style="text-align: center;margin-bottom: 15px;margin-top: 100px;">
+            开玩笑，这辈子缠上你了，这辈子都不会放过你了，我才不会那么容易放弃呢！！！</p>
+            <a id="changeBtn" onclick="changeFun()" href="javascript:" style="width: 200px;display: none;margin-top: 15px;" class="weui-btn weui-btn weui-btn_primary">我想再重新选择一下</a>
+            </h3>
+    </div>
+    <script type="text/javascript" src="/js/example.js"></script>
 </body>
 </html>
+<script>
+    var address = "";
+    var myConfirm = function (text, yesCallback, noCallback, yesLabel, noLabel) {
+        weui.confirm(text, {
+            buttons: [{
+                label: noLabel ? noLabel : '不好',
+                type: 'default',
+                onClick: function () { setTimeout(function () { noCallback() }, 500); }
+            }, {
+                label: yesLabel ? yesLabel : '好',
+                type: 'primary',
+                onClick: function () { setTimeout(function () { yesCallback() }, 500) }
+            }]
+        });
+    }
+    function showPage2(text) {
+        var audio = document.getElementById("bgMusic");
+        audio.play();
+        alert(text);
+        document.getElementById("page2").style.display = "block";
+        document.getElementById("page1").style.display = "none";
+
+        //可以做成定制
+        //jQuery.post("http://121.42.229.169:8080/api/receive", { msg: "你真特么是天才,不服不行 o(╯□╰)o" }, function (data, status, xhr) {
+        //    console.log(data);
+        //})
+    }
+    function yesFun() {
+        showPage2("天啦，这是真的吗？真的答应做我女朋友吗？好开心啊");
+    }
+    function noFun() {
+        myConfirm("工资上交", function () {
+            showPage2("天啦，这是真的吗？真的答应做我女朋友吗？好开心啊！想想以后要跟您申请零花钱的日子就觉得好幸福啊");
+        }, function () {
+            myConfirm("地我来拖", function () {
+                showPage2("天啦，这是真的吗？真的答应做我女朋友吗？好开心啊！");
+            }, function () {
+                myConfirm("饭我来做", function () { showPage2("嘻嘻，放心吧，我做的饭还是可以吃的。只要你想吃的我都会给你做，就算不会我也会去学！"); },
+                    function () {
+                        myConfirm("衣服我来洗", function () {
+                            showPage2("天啦，这是真的吗？真的答应做我女朋友吗？好开心啊！以后我们就买台洗衣机吧，衣服我全包了！");
+                        }, function () {
+                            myConfirm("家务全包", function () {
+                                showPage2("以后我做家务的时候你就坐旁边沙发上嗑瓜子去吧。");
+                            }, function () {
+                                myConfirm("你说一我不说二，你叫我往东我绝不往西", function () {
+                                    showPage2("你终于答应我了，希望你的余生都有我，让我成为那个宠你的人");
+                                }, function () {
+                                    myConfirm("带你吃鸡", function () {
+                                        showPage2("你终于答应我了，都快哭了，希望你的余生都有我，正经的时候陪你正经疯的时候陪你一起疯");
+                                    }, function () {
+                                        alert("哼~哼~哼");
+                                        alert("你以为我就这么放弃了吗？");
+                                        document.getElementById("page1").style.display = "none";
+                                        document.getElementById("page2").style.display = "none";
+                                        document.getElementById("page3").style.display = "block";
+                                        setTimeout(function () {
+                                            alert("我们来玩个游戏吧");
+                                            myConfirm("你猜我的心脏在哪边？", function () {
+                                                alert("嘿嘿，都错了在你那边");
+                                                document.getElementById("changeBtn").style.display = "block";
+                                            }, function () {
+                                                alert("嘿嘿，都错了在你那边");
+                                                document.getElementById("changeBtn").style.display = "block";
+                                            }, "右边", "左边");
+                                        }, 1000);
+                                    })
+                                })
+                            })
+                        })
+                    })
+            });
+        });
+    }
+    function changeFun() {
+        document.getElementById("page1").style.display = "block";
+        document.getElementById("page2").style.display = "none";
+        document.getElementById("page3").style.display = "none";
+    }
+
+    //百度定位
+    //window.onload = function () {
+    //    // 百度地图API功能
+    //    var map = new BMap.Map("allmap");
+    //    var point = new BMap.Point(113.893019, 22.594846);
+    //    map.centerAndZoom(point, 12);
+
+    //    var geolocation = new BMap.Geolocation();
+    //    geolocation.getCurrentPosition(function (r) {
+    //        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+    //            var mk = new BMap.Marker(r.point);
+    //            map.addOverlay(mk);
+    //            map.panTo(r.point);
+    //            console.log('您的位置：' + r.point.lng + ',' + r.point.lat);
+    //            address = r.point.lng + ',' + r.point.lat;
+    //            setTimeout(function () {
+    //                jQuery.post("http://121.42.229.169:8080/api/receive", { msg: "|地址信息|" + address }, function (data, status, xhr) {
+    //                    console.log(data);
+    //                })
+    //            }, 3000);
+    //        }
+    //        else {
+    //            alert('failed' + this.getStatus());
+    //        }
+    //    }, { enableHighAccuracy: true })
+    //}
+</script>

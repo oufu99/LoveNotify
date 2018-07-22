@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace LoveNotify
+namespace SayLove
 {
     public class FilterConfig
     {
